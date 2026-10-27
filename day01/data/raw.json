@@ -1,0 +1,22 @@
+[
+  {
+    "symbol": "QQQ",
+    "date": "2026-10-26",
+    "close": "620.50"
+  },
+  {
+    "symbol": "SPY",
+    "date": "2026-10-26",
+    "close": "680.20"
+  },
+  {
+    "symbol": "QQQ",
+    "date": "2026-10-26",
+    "close": "620.50"
+  },
+  {
+    "symbol": "SPY",
+    "date": "2026-10-27",
+    "close": null
+  }
+]
