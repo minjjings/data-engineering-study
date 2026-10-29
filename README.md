@@ -1,6 +1,6 @@
 # 데이터 엔지니어링 독학 기록
 
-Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 자동화까지 연결하는 **24주 독학 로드맵**입니다. 기존 Day 1·Day 2 실습의 시장 가격 예제를 단계적으로 확장해, 마지막에는 재실행과 장애 복구가 가능한 데이터 파이프라인을 만듭니다. 예제 가격과 거래량은 학습용 가상 데이터입니다.
+Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 자동화까지 연결하는 **24주·120일 독학 로드맵**입니다. 기존 Day 1·Day 2 실습의 시장 가격 예제를 단계적으로 확장해, 마지막에는 재실행과 장애 복구가 가능한 데이터 파이프라인을 만듭니다. 예제 가격과 거래량은 학습용 가상 데이터입니다.
 
 **학습 기준: 주 5일, 하루 90~120분** · 주 7.5~10시간 · 전체 약 180~240시간
 
@@ -11,6 +11,7 @@ Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 �
 - [학습 방식과 완료 기준](#learning-guide)
 - [기존 교재와 저장소 구성](#repository)
 - [로컬 Docker 실습 시작하기](#local-start)
+- [Day 1~120 교재 목차](#day-index)
 - [24주 학습 목차](#roadmap)
   - [1~3주: 데이터 엔지니어링 기초와 SQL](#phase-1)
   - [4~6주: Python·PostgreSQL·Airflow](#phase-2)
@@ -30,11 +31,11 @@ Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 �
 
 | 요일 대신 사용할 학습일 | 할 일 |
 | --- | --- |
-| Day 1 | 핵심 개념 정리, 작은 예제 실행, 이번 주 목표 설정 |
-| Day 2 | 기본 실습 구현 및 입력·출력 확인 |
-| Day 3 | 예외 데이터와 실패 상황을 넣어 실습 확장 |
-| Day 4 | 재실행·복구 확인, 검증 쿼리 또는 필요한 테스트 작성 |
-| Day 5 | 산출물 정리, 개념 설명, 리뷰와 부족한 부분 보완 |
+| 주간 1일차 | 핵심 개념 정리, 작은 예제 실행, 이번 주 목표 설정 |
+| 주간 2일차 | 기본 실습 구현 및 입력·출력 확인 |
+| 주간 3일차 | 예외 데이터와 실패 상황을 넣어 실습 확장 |
+| 주간 4일차 | 재실행·복구 확인, 검증 쿼리 또는 필요한 테스트 작성 |
+| 주간 5일차 | 산출물 정리, 개념 설명, 리뷰와 부족한 부분 보완 |
 
 하루 시간은 **개념 20분 + 실습 55~80분 + 결과 정리 15~20분 = 90~120분**으로 나눕니다. 초과하는 선택 과제는 다음 학습일로 넘깁니다.
 
@@ -49,7 +50,9 @@ Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 �
 <a id="repository"></a>
 ## 기존 교재와 저장소 구성
 
-기존 교재, 코드, 샘플 데이터와 Docker 설정을 유지하고 이 README를 전체 학습의 입구로 사용합니다.
+전체 계획은 이 README에서, 매일의 개념 설명과 실습은 각 `dayNN/README.md`에서 확인합니다. **24주 × 주 5일 = Day 1~120**이며 번호는 주차가 바뀌어도 이어집니다. 기존 Day 1·2 교재, 코드, 샘플 데이터와 Docker 설정을 유지합니다.
+
+각 day 교재에는 학습 목표·개념·환경 준비·따라 하기 예제·예상 결과·직접 구현할 과제·완료 기준·리뷰 양식을 미리 작성했습니다. **교재 준비와 실습 완료는 다릅니다.** 새 교재의 실습 코드와 설정 파일은 학습하면서 작성합니다.
 
 | 기존 자료 | 내용 | 로드맵 연결 |
 | --- | --- | --- |
@@ -62,20 +65,15 @@ Python·SQL 기초부터 AWS 배치 파이프라인, Spark, Kafka·CDC, 운영 �
 
 ```text
 data-engineering-study/
-├── README.md
-├── docker-compose.yml
-├── day01/
-│   ├── README.md
-│   ├── pipeline.py
-│   └── data/
-│       ├── raw.json
-│       └── clean.json
-└── day02/
-    ├── README.md
-    └── init.sql
+├── README.md                  # 전체 24주 계획과 120일 교재 목차
+├── docker-compose.yml         # 기존 PostgreSQL 실습 환경
+├── day01/                     # 기존 상세 교재·pipeline.py·샘플 데이터
+├── day02/                     # 기존 상세 교재·init.sql
+├── day03/ ~ day99/            # 일별 개념·예제·실습 README
+└── day100/ ~ day120/          # 운영·통합 프로젝트 교재
 ```
 
-아래 로드맵의 추가 산출물은 **앞으로 만들 파일**입니다. 예를 들어 `notes/week01.md`, `sql/week02/`, `src/`, `dags/`, `dbt/`, `spark/`, `streaming/`, `tests/`, `docs/`를 필요할 때 생성합니다. 기존 `day01/`, `day02/`는 그대로 연결해 사용합니다.
+아래 로드맵의 추가 산출물은 **앞으로 만들 파일**입니다. 예를 들어 `notes/week01.md`, `sql/week02/`, `src/`, `dags/`, `dbt/`, `spark/`, `streaming/`, `tests/`, `docs/`를 필요할 때 생성합니다. 일별 README 120개는 준비되어 있으며, 기존 `day01/`, `day02/`의 코드와 데이터를 후속 실습에 연결합니다. 실습 환경과 공통 코드는 해당 주차에 작성합니다.
 
 <a id="local-start"></a>
 ## 로컬 Docker 실습 시작하기
@@ -170,6 +168,40 @@ docker compose up -d
 
 `docker compose down -v`는 데이터 볼륨을 삭제하므로 일반 종료에 사용하지 않습니다. [Docker Compose 종료 안내](https://docs.docker.com/reference/cli/docker/compose/down/)
 
+<a id="day-index"></a>
+## Day 1~120 교재 목차
+
+하루 권장 시간은 90~120분입니다. 순서대로 읽되 선행 실습이 끝나지 않았다면 해당 내용을 먼저 보완합니다. 아래의 주간 1~5일차와 폴더의 누적 Day 번호를 구분합니다. Day 3~5에서는 JOIN·Watermark·멱등성을 작게 맛보고 2~3주에 심화합니다.
+
+| 주차 | 이번 주 주제 | 누적 학습일별 교재 |
+| --- | --- | --- |
+| 1주 | 파이프라인의 역할과 SQL 입문 | [Day 1](./day01/README.md) · [Day 2](./day02/README.md) · [Day 3](./day03/README.md) · [Day 4](./day04/README.md) · [Day 5](./day05/README.md) |
+| 2주 | 집계·JOIN·윈도 함수와 정제 SQL | [Day 6](./day06/README.md) · [Day 7](./day07/README.md) · [Day 8](./day08/README.md) · [Day 9](./day09/README.md) · [Day 10](./day10/README.md) |
+| 3주 | 데이터 모델링·트랜잭션·증분 적재 | [Day 11](./day11/README.md) · [Day 12](./day12/README.md) · [Day 13](./day13/README.md) · [Day 14](./day14/README.md) · [Day 15](./day15/README.md) |
+| 4주 | Python 수집 코드 구조화 | [Day 16](./day16/README.md) · [Day 17](./day17/README.md) · [Day 18](./day18/README.md) · [Day 19](./day19/README.md) · [Day 20](./day20/README.md) |
+| 5주 | Python에서 PostgreSQL로 안정적으로 적재 | [Day 21](./day21/README.md) · [Day 22](./day22/README.md) · [Day 23](./day23/README.md) · [Day 24](./day24/README.md) · [Day 25](./day25/README.md) |
+| 6주 | Airflow로 배치 예약 실행 | [Day 26](./day26/README.md) · [Day 27](./day27/README.md) · [Day 28](./day28/README.md) · [Day 29](./day29/README.md) · [Day 30](./day30/README.md) |
+| 7주 | dbt 프로젝트와 계층별 SQL 모델 | [Day 31](./day31/README.md) · [Day 32](./day32/README.md) · [Day 33](./day33/README.md) · [Day 34](./day34/README.md) · [Day 35](./day35/README.md) |
+| 8주 | dbt 테스트와 문서화 | [Day 36](./day36/README.md) · [Day 37](./day37/README.md) · [Day 38](./day38/README.md) · [Day 39](./day39/README.md) · [Day 40](./day40/README.md) |
+| 9주 | dbt 증분 모델과 Airflow 연결 | [Day 41](./day41/README.md) · [Day 42](./day42/README.md) · [Day 43](./day43/README.md) · [Day 44](./day44/README.md) · [Day 45](./day45/README.md) |
+| 10주 | S3 데이터 레이크와 접근 권한 | [Day 46](./day46/README.md) · [Day 47](./day47/README.md) · [Day 48](./day48/README.md) · [Day 49](./day49/README.md) · [Day 50](./day50/README.md) |
+| 11주 | Glue Data Catalog와 Athena SQL | [Day 51](./day51/README.md) · [Day 52](./day52/README.md) · [Day 53](./day53/README.md) · [Day 54](./day54/README.md) · [Day 55](./day55/README.md) |
+| 12주 | Glue ETL과 데이터 웨어하우스 | [Day 56](./day56/README.md) · [Day 57](./day57/README.md) · [Day 58](./day58/README.md) · [Day 59](./day59/README.md) · [Day 60](./day60/README.md) |
+| 13주 | PySpark DataFrame과 명시적 스키마 | [Day 61](./day61/README.md) · [Day 62](./day62/README.md) · [Day 63](./day63/README.md) · [Day 64](./day64/README.md) · [Day 65](./day65/README.md) |
+| 14주 | Spark JOIN·윈도 함수와 대규모 정제 | [Day 66](./day66/README.md) · [Day 67](./day67/README.md) · [Day 68](./day68/README.md) · [Day 69](./day69/README.md) · [Day 70](./day70/README.md) |
+| 15주 | Parquet·파티션과 파일 설계 | [Day 71](./day71/README.md) · [Day 72](./day72/README.md) · [Day 73](./day73/README.md) · [Day 74](./day74/README.md) · [Day 75](./day75/README.md) |
+| 16주 | Spark 실행 계획·성능과 배치 연결 | [Day 76](./day76/README.md) · [Day 77](./day77/README.md) · [Day 78](./day78/README.md) · [Day 79](./day79/README.md) · [Day 80](./day80/README.md) |
+| 17주 | Kafka 이벤트·Producer·Consumer | [Day 81](./day81/README.md) · [Day 82](./day82/README.md) · [Day 83](./day83/README.md) · [Day 84](./day84/README.md) · [Day 85](./day85/README.md) |
+| 18주 | Spark Structured Streaming과 처리 보장 | [Day 86](./day86/README.md) · [Day 87](./day87/README.md) · [Day 88](./day88/README.md) · [Day 89](./day89/README.md) · [Day 90](./day90/README.md) |
+| 19주 | PostgreSQL CDC와 Debezium | [Day 91](./day91/README.md) · [Day 92](./day92/README.md) · [Day 93](./day93/README.md) · [Day 94](./day94/README.md) · [Day 95](./day95/README.md) |
+| 20주 | 데이터 품질 규칙과 실패 처리 | [Day 96](./day96/README.md) · [Day 97](./day97/README.md) · [Day 98](./day98/README.md) · [Day 99](./day99/README.md) · [Day 100](./day100/README.md) |
+| 21주 | 로그·지표·모니터링과 장애 대응 | [Day 101](./day101/README.md) · [Day 102](./day102/README.md) · [Day 103](./day103/README.md) · [Day 104](./day104/README.md) · [Day 105](./day105/README.md) |
+| 22주 | 테스트·CI/CD와 재현 가능한 환경 | [Day 106](./day106/README.md) · [Day 107](./day107/README.md) · [Day 108](./day108/README.md) · [Day 109](./day109/README.md) · [Day 110](./day110/README.md) |
+| 23주 | 통합 프로젝트 최소 배치와 스트리밍 확장 | [Day 111](./day111/README.md) · [Day 112](./day112/README.md) · [Day 113](./day113/README.md) · [Day 114](./day114/README.md) · [Day 115](./day115/README.md) |
+| 24주 | 통합 검증·복구·문서화와 최종 리뷰 | [Day 116](./day116/README.md) · [Day 117](./day117/README.md) · [Day 118](./day118/README.md) · [Day 119](./day119/README.md) · [Day 120](./day120/README.md) |
+
+실습을 시작할 때는 교재의 **실습 준비**부터 확인합니다. PostgreSQL 외의 Airflow·dbt·AWS·Spark·Kafka·CDC·Grafana 설정은 아직 구현되지 않은 학습 과제이며, 처음 다루는 주차에 구성합니다. 운영 도구의 실행은 각 준비 항목에 적힌 환경을 기준으로 합니다. 필수 배치와 선택 CDC 확장을 나누어 기록합니다.
+
 <a id="roadmap"></a>
 ## 24주 학습 목차
 
@@ -180,8 +212,8 @@ docker compose up -d
 
 #### 1주 — 파이프라인의 역할과 SQL 입문
 
-- [ ] **핵심 주제:** ETL·ELT, Raw·정제 데이터, 데이터 품질, Docker·PostgreSQL, SELECT·WHERE·NULL을 설명한다.
-- [ ] **실습:** 기존 Day 1을 실행해 입력·출력을 비교하고, Day 2 환경에서 테이블·샘플 5건을 확인한 뒤 NULL과 중복을 조회한다.
+- [ ] **핵심 주제:** ETL·ELT, Raw·정제 데이터, Docker·PostgreSQL, SELECT·NULL을 익히고 JOIN·Watermark·멱등성의 목적을 작은 예제로 설명한다.
+- [ ] **실습:** 기존 Day 1을 실행해 입력·출력을 비교하고, Day 2 환경에서 샘플 5건의 NULL·중복을 조회한다. Day 3~5에서 종목 연결·증분 범위·가격 정제를 실습한다.
 - [ ] **산출물:** 기존 실습 실행 기록과 `notes/week01.md`에 ETL·ELT 비교, 데이터 처리 흐름, SQL 결과와 남은 질문을 정리한다.
 
 #### 2주 — 집계·JOIN·윈도 함수와 정제 SQL
@@ -350,7 +382,7 @@ AWS 실습은 사용할 리전·권한·예산 알림을 먼저 정하고 작은
 <a id="study-log"></a>
 ## 학습 기록과 리뷰 양식
 
-매 학습일 기록은 `notes/weekXX/dayYY.md` 등에 남깁니다. 날짜·시도·완료·검토 결과를 구분하고, 오류가 있으면 재현에 필요한 입력과 메시지를 함께 보관합니다.
+매 학습일 기록은 각 `dayNN/notes.md` 또는 `notes/weekXX/dayYY.md`에 남깁니다. 날짜·시도·완료·검토 결과를 구분하고, 오류가 있으면 재현에 필요한 입력과 메시지를 함께 보관합니다.
 
 ```text
 주차 / 학습일 / 날짜:

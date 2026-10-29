@@ -1,5 +1,9 @@
 ﻿# Day 2. 데이터 저장 구조와 SQL 심화
 
+<!-- curriculum-navigation -->
+[전체 계획](../README.md) · [120일 목차](../README.md#day-index) · [← Day 1](../day01/README.md) · [Day 3 →](../day03/README.md)
+<!-- /curriculum-navigation -->
+
 **1주 차 · 두 번째 수업 | 약 100~120분**
 
 [Day 1](../day01/README.md)에서는 Python으로 데이터를 정리했다. 오늘은 PostgreSQL에 데이터를 저장하고 **SQL로 빈 값과 중복을 찾는 방법**을 배운다. Docker로 PostgreSQL을 실행하므로 내 컴퓨터에 PostgreSQL을 직접 설치할 필요는 없다.
