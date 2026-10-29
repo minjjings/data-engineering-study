@@ -33,12 +33,14 @@ S3·Catalog·로컬 PostgreSQL을 사용한다. Glue Python shell 작업을 작�
 
 ## 3장. 예제로 따라 해보기
 
+아래 예제는 Day 58에서 만든 TEMP 테이블과 **같은 psql 연결**에서 실행한다. 연결을 종료했다면 Day 58의 DDL을 먼저 다시 실행한다. TEMP 예제와 별도로, 과제에서는 동일한 컬럼 정의의 `dw_lab.dim_symbol`, `dw_lab.dim_date`, `dw_lab.fact_price`를 만든다.
+
 먼저 예상 결과를 읽고 어떤 입력이 어떤 이유로 남는지 생각한다. 아래 코드가 부분 예제라면 주석에서 지정한 파일·함수·이전 코드에 합친다.
 
 ```sql
-INSERT INTO dim_symbol VALUES ('QQQ', 'technology'), ('SPY', 'broad_market');
-INSERT INTO dim_date VALUES ('2026-10-26', 2026);
-INSERT INTO fact_price VALUES ('QQQ', '2026-10-26', 620.50),
+INSERT INTO dim_symbol (symbol, category) VALUES ('QQQ', 'technology'), ('SPY', 'broad_market');
+INSERT INTO dim_date (trade_date, year) VALUES ('2026-10-26', 2026);
+INSERT INTO fact_price (symbol, trade_date, close_price) VALUES ('QQQ', '2026-10-26', 620.50),
                               ('SPY', '2026-10-26', 680.20)
 ON CONFLICT (symbol, trade_date)
 DO UPDATE SET close_price = EXCLUDED.close_price;
@@ -51,7 +53,7 @@ SELECT COUNT(*) AS fact_rows FROM fact_price;
 
 ## 4장. 직접 해볼 실습 과제
 
-1. dw_lab 스키마에 영구 차원·팩트 DDL을 만든다.
+1. Day 58의 DDL에서 `TEMP`를 빼고 테이블·참조 대상에 `dw_lab` 스키마를 붙여 영구 차원·팩트를 만든다. 팩트 컬럼은 `symbol text`, `trade_date date`, `close_price numeric(12,2)`이며 키는 `(symbol, trade_date)`다.
 2. Glue 출력 2행을 Python과 바인딩된 UPSERT로 적재한다.
 3. 파일과 DW의 키·가격을 비교해 누락·초과가 없는지 확인한다.
 

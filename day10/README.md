@@ -29,7 +29,7 @@ SQL 파이프라인은 원본에서 최종 결과까지의 선택 규칙을 연�
 
 ## 2장. 실습 준비
 
-Day 2의 PostgreSQL에 접속한다. 아래 `WITH prices ... VALUES` 예제는 원본 테이블과 독립적인 가상 가격 4건이다. CTE는 해당 문장에서만 존재하므로 SQL 블록 전체를 실행한다. 직접 작성할 쿼리는 `sql/week02/`에 저장한다.
+Day 2의 PostgreSQL에 접속한다. 오늘 진단 쿼리는 `raw_market_prices`의 최초 샘플 5건을 사용한다. 정제 view는 Day 5의 SQL로 만들며 출력은 `symbol`, `trade_date`, 숫자형 `close_price` 세 컬럼이다. 직접 작성할 쿼리는 `sql/week02/`에 저장한다.
 
 이전 학습일의 과제를 아직 구현하지 않았다면 해당 교재에서 먼저 준비한다. 문서 안의 파일명은 앞으로 작성할 산출물을 포함한다. 첫 사용 환경은 이번 주 첫 교재인 [Day 6](../day06/README.md)의 준비 항목도 확인한다.
 
@@ -54,8 +54,8 @@ FROM raw_market_prices;
 
 ## 4장. 직접 해볼 실습 과제
 
-1. Day 5의 SELECT를 clean_market_prices라는 view로 만들고 결과 2건을 확인한다.
-2. 정제 view의 NULL 키·비양수 가격·중복 키를 찾는 검증 SQL 3개를 작성해 모두 0건인지 확인한다.
+1. Day 5 SQL의 `WITH parsed AS (...)` 앞에 `CREATE VIEW public.clean_market_prices AS`를 붙여 view를 만든다. `SELECT symbol, trade_date, close_price FROM public.clean_market_prices;`로 출력 컬럼과 결과 2건을 확인한다. 같은 이름의 view가 이미 있다면 먼저 `\d+ public.clean_market_prices`로 정의를 확인한다.
+2. 정제 view의 NULL 키·`close_price <= 0`·중복 키를 찾는 검증 SQL 3개를 작성해 모두 0건인지 확인한다.
 3. sql/week02에 진단·정제·집계 SQL과 규칙 설명, 예상·실제 결과를 묶는다.
 
 작성한 코드·SQL·설정은 이 day 폴더 또는 과제에서 지정한 공통 디렉터리에 저장한다. 실행 기록은 `day10/notes.md`에 남긴다. 원본 예제와 별도 경로를 사용하고, 오류 입력·재실행으로 결과가 달라졌다면 그 이유도 기록한다.

@@ -51,11 +51,13 @@ WITH parsed AS (
     FROM parsed
     WHERE price > 0 AND symbol IS NOT NULL AND trade_date IS NOT NULL
 )
-SELECT symbol, trade_date, price FROM ranked
+SELECT symbol, trade_date, price AS close_price FROM ranked
 WHERE rn = 1 ORDER BY symbol, trade_date;
 ```
 
 **예상 결과와 확인 기준:** 최초 5건에서는 QQQ 620.50, SPY 680.20 두 행이다. 여기서는 정상 가격을 먼저 남긴 뒤 최신 행을 고른다. Raw는 5건 그대로다.
+
+`price`는 CTE 안에서 계산한 숫자값의 임시 이름이다. 최종 출력은 `price AS close_price`로 이름을 정해 `symbol`, `trade_date`, `close_price` 세 컬럼을 반환한다. Day 10의 정제 view와 이후 데이터 계약도 이 이름을 사용한다. Raw의 `close_price`는 문자열이고 여기서 반환하는 `close_price`는 숫자라는 타입 차이가 있다.
 
 화면 출력이나 성공 상태만으로 끝내지 않고, 오늘 목표와 직접 연결되는 건수·키·값·상태를 확인한다.
 

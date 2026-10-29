@@ -25,6 +25,8 @@
 
 Day 1의 raw.json은 여러 줄 JSON 배열이다. Athena의 일반적인 JSON SerDe는 한 줄에 한 객체인 JSON Lines를 기대한다. 원본은 보존하고 별도 변환 파일을 만들어 업로드한다.
 
+새 JSON Lines 파일은 `date`를 `trade_date`, `close`를 `close_price`로 명시적으로 매핑한다. Day 51의 Athena 테이블은 이 출력 이름을 사용한다. Day 1 원본 JSON의 키는 그대로 두며, DB 전용 컬럼인 `id`, `collected_at`은 이 파일에 포함하지 않는다. Athena의 `ingest_date`는 파일 내부 필드가 아니라 S3 경로에서 등록하는 파티션 컬럼이다.
+
 ## 2장. 실습 준비
 
 AWS 계정·리전·예산 알림과 AWS CLI v2를 준비한다. PowerShell에서 인증한 프로필과 AWS_PROFILE, AWS_DEFAULT_REGION=ap-northeast-2, DE_BUCKET 환경변수를 설정한다. DE_BUCKET에는 본인이 소유한 실습용 버킷 이름을 넣는다. 버킷 이름은 전역에서 유일해야 한다. 실제 AWS 실습은 비용이 발생할 수 있다. 계정이 없다면 로컬 파일·권한 설계까지 진행하고 클라우드 실행은 미완료로 기록한다.

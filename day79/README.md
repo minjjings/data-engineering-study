@@ -45,8 +45,9 @@ df = spark.createDataFrame([
     ("QQQ", "2026-10-27", "621.00", 3),
     ("SPY", "2026-10-27", "682.00", 4),
 ], "symbol string, trade_date string, close_price string, source_id long")
-clean = df.select("symbol", "trade_date",
+clean = df.select("symbol", F.to_date("trade_date").alias("trade_date"),
     F.col("close_price").cast("decimal(12,2)").alias("close_price"))
+clean.printSchema()
 assert clean.count() == 4
 assert clean.groupBy("symbol", "trade_date").count().where("count > 1").count() == 0
 clean.write.mode("overwrite").parquet("day79/validated-batch")
@@ -54,15 +55,15 @@ print("validated batch ready")
 spark.stop()
 ```
 
-**예상 결과와 확인 기준:** 검증된4행 Parquet가 만들어진다. 아직 DW에 적재된 것은 아니다.
+**예상 결과와 확인 기준:** 검증된 4행 Parquet가 만들어진다. 출력 컬럼은 `symbol`(string), `trade_date`(date), `close_price`(decimal(12,2))이며 Day 59의 DW 컬럼과 대응한다. 실습 입력의 `source_id`는 결과에 포함하지 않는다. 아직 DW에 적재된 것은 아니다.
 
 화면 출력이나 성공 상태만으로 끝내지 않고, 오늘 목표와 직접 연결되는 건수·키·값·상태를 확인한다.
 
 ## 4장. 직접 해볼 실습 과제
 
-1. 작은 실습에서는 Python으로4행을 읽어 Day25의UPSERT로 dw_lab에 적재한다.
+1. 작은 실습에서는 Python으로 4행을 읽고 Day 59의 `(symbol, trade_date, close_price)` UPSERT를 바인딩된 매개변수로 실행해 `dw_lab.fact_price`에 적재한다. `dw_lab.dim_symbol`과 `dw_lab.dim_date`의 종목·날짜 차원을 먼저 준비한다. Day 14의 별도 `lab_upsert.price` 컬럼과 혼용하지 않는다.
 2. 대규모 확장용 JDBC staging 경로를 설계하고 드라이버 버전·DB 동시 연결 수를 정한다.
-3. 파일 저장 성공·DB 실패에서 같은 배치를 재적재해4행 상태를 유지한다.
+3. 파일 저장 성공·DB 실패에서 같은 배치를 재적재해 4행 상태를 유지한다.
 
 작성한 코드·SQL·설정은 이 day 폴더 또는 과제에서 지정한 공통 디렉터리에 저장한다. 실행 기록은 `day79/notes.md`에 남긴다. 원본 예제와 별도 경로를 사용하고, 오류 입력·재실행으로 결과가 달라졌다면 그 이유도 기록한다.
 

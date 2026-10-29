@@ -190,6 +190,18 @@ DBeaver 같은 도구를 사용한다면 다음 값으로 연결할 수도 있�
 
 ### 원본 테이블 설계와 데이터 삽입
 
+Day 1의 JSON과 오늘의 DB 테이블은 같은 의미의 값을 사용하지만 저장할 때의 이름이 다르다.
+
+| Day 1 Python·JSON 키 | Day 2 DB 컬럼 | 의미 |
+| --- | --- | --- |
+| `symbol` | `symbol` | 종목 코드 |
+| `date` | `trade_date` | 가격의 기준 거래일 |
+| `close` | `close_price` | 원본 가격 문자열 또는 NULL |
+
+DB에는 행 식별용 `id`와 수집 시각 `collected_at`도 추가한다. 오늘의 SQL은 DB 컬럼명을 사용하므로 `date`, `close` 대신 `trade_date`, `close_price`로 조회한다.
+
+또한 Day 1의 Raw JSON은 **4건**, 오늘의 초기화 SQL은 잘못된 문자열 가격을 연습할 `QQQ / 2026-10-27 / N/A`를 추가한 **5건**이다. 오늘은 JSON을 자동으로 적재하지 않고 아래 SQL로 별도 샘플을 만든다.
+
 다음은 [init.sql](./init.sql)의 전체 내용이다. **Docker 최초 실행에서 이미 적용되었다면 읽고 확인만 한다.**
 
 ```sql

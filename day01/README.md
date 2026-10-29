@@ -44,6 +44,8 @@ Python으로 API에 요청하면 다음과 같은 데이터를 받을 수 있다
 
 **이 수업의 가격과 거래량은 모두 학습용 가상 데이터이며 실제 QQQ 시세가 아니다.**
 
+위 응답은 개념 설명용 예시다. 3장의 실제 Python 실습에서는 `volume`을 제외한 `symbol`, `date`, `close`만 사용하고, 가격은 `"620.50"`처럼 문자열로 저장한다.
+
 | 항목 | 뜻 |
 | --- | --- |
 | `symbol` | 종목을 나타내는 코드 |
@@ -143,21 +145,34 @@ QQQ가 같은 날짜에 두 번 들어와 있다. 가격도 숫자가 아니라 
 
 dbt는 주로 **ELT의 T, 즉 이미 저장된 데이터를 변환하는 단계**에서 사용한다. SQL로 변환 규칙을 작성하고, 어떤 결과를 먼저 만들어야 하는지 작업 사이의 순서도 관리할 수 있다. [dbt 모델 공식 문서](https://docs.getdbt.com/docs/build/models)
 
-예를 들어 원본 데이터가 PostgreSQL의 `raw_market_prices`라는 표에 이미 저장되어 있다면 다음 SQL로 가격을 숫자로 바꿀 수 있다. 이 표는 오늘 실습에서는 만들지 않으며, 아래 코드는 개념을 이해하기 위한 예시다.
+예를 들어 원본 데이터가 PostgreSQL의 `raw_market_prices`라는 표에 이미 저장되어 있다면 다음 SQL로 정상 가격을 숫자로 바꿀 수 있다. 이 표는 [Day 2](../day02/README.md)에서 만든다. 아래 예시는 Day 2의 실제 컬럼명인 `trade_date`, `close_price`를 사용하며, 오늘은 변환의 역할을 이해하는 데 집중한다.
 
 ```sql
-SELECT
-    symbol,
-    CAST(close AS NUMERIC) AS close_price
-FROM raw_market_prices
-WHERE close IS NOT NULL;
+WITH parsed AS (
+    SELECT
+        id,
+        symbol,
+        trade_date,
+        CASE
+            WHEN close_price ~ '^[0-9]+([.][0-9]+)?$'
+            THEN CAST(close_price AS NUMERIC)
+            ELSE NULL
+        END AS close_price
+    FROM raw_market_prices
+)
+SELECT symbol, trade_date, close_price
+FROM parsed
+WHERE close_price > 0
+ORDER BY id;
 ```
 
-- `FROM`: 어느 표에서 가져올지 정한다.
-- `WHERE close IS NOT NULL`: 가격이 비어 있지 않은 행만 고른다.
-- `CAST(close AS NUMERIC)`: 가격을 숫자 형식으로 바꾼다.
+- `WITH parsed AS (...)`: 가격을 변환한 중간 조회 결과에 `parsed`라는 이름을 붙인다. 원본 표를 바꾸지는 않는다.
+- `CASE WHEN ... THEN ... ELSE ... END`: 조건을 만족할 때만 변환하고, 나머지는 NULL로 표시한다.
+- `~ '^[0-9]+([.][0-9]+)?$'`: 부호 없는 정수·소수 모양인지 확인하는 학습용 규칙이다. `N/A`나 `abc`는 숫자로 변환하지 않는다.
+- `CAST(close_price AS NUMERIC)`: 검사한 가격 문자열을 숫자 형식으로 바꾼다.
+- `WHERE close_price > 0`: 변환한 값 중 양수만 남긴다. NULL과 0은 제외된다.
 
-**이 SQL은 중복을 제거하지 않는다.** 또 `"abc"`처럼 숫자로 바꿀 수 없는 문자열이 있으면 실패할 수 있다. 모든 품질 문제를 해결하는 쿼리는 아니다.
+Day 2의 최초 샘플 5건에 실행하면 NULL·`N/A`를 제외한 **3건**이 나온다. QQQ의 같은 거래일 데이터 2건은 그대로 남는다. **이 SQL은 중복을 제거하지 않는다.** 날짜·종목 검사와 중복 선택 기준은 이후 실습에서 다룬다.
 
 dbt에서는 데이터 확인 규칙도 선언할 수 있다.
 

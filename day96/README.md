@@ -43,12 +43,16 @@ fields:
   symbol: {type: string, required: true}
   trade_date: {type: date, required: true}
   close_price: {type: decimal, required: true, min_exclusive: 0}
-freshness_basis: collected_at
+freshness:
+  source_dataset: public.raw_market_prices
+  source_field: collected_at
 on_invalid_row: quarantine
 on_missing_required_column: fail_batch
 ```
 
 **예상 결과와 확인 기준:** 계약을 설명할 수 있고 실제 검사는 다음 수업에서 구현한다. YAML 파일 작성만으로 검증이 실행되지는 않는다.
+
+`clean_market_prices`는 Day 10의 정제 view이며 `symbol`, `trade_date`, `close_price` 세 컬럼만 가진다. 최신성은 이 view에 없는 컬럼을 조회하는 대신 원천 `public.raw_market_prices.collected_at`으로 검사한다. 위 `freshness` 항목은 그 참조 대상을 명시한 자체 계약이다.
 
 화면 출력이나 성공 상태만으로 끝내지 않고, 오늘 목표와 직접 연결되는 건수·키·값·상태를 확인한다.
 
